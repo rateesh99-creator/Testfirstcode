@@ -20,6 +20,19 @@ def calculator():
             result = num1 / num2 if num2 != 0 else "Error: Division by zero"
 
     return render_template("index.html", result=result)
+import boto3, os
+
+s3 = boto3.client(
+    "s3",
+    endpoint_url=os.getenv("S3_ENDPOINT"),
+    aws_access_key_id=os.getenv("AWS_ACCESS_KEY_ID"),
+    aws_secret_access_key=os.getenv("AWS_SECRET_ACCESS_KEY"),
+    region_name=os.getenv("AWS_DEFAULT_REGION")
+)
+
+obj = s3.get_object(Bucket="my-bucket", Key="index.html")
+content = obj["Body"].read().decode("utf-8")
+
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(host="0.0.0.0", port=5000, debug=True)
