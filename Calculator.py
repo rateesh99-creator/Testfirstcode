@@ -30,7 +30,7 @@ s3 = boto3.client(
     region_name=os.getenv("AWS_DEFAULT_REGION")
 )
 
-obj = s3.get_object(Bucket="my-bucket", Key="index.html")
+obj = s3.get_object(Bucket="Mybucket", Key="index.html")
 content = obj["Body"].read().decode("utf-8")
 
 
